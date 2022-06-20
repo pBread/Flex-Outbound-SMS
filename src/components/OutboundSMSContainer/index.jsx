@@ -1,7 +1,14 @@
 import { Button } from "@twilio-paste/core/button";
+import {
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalFooterActions,
+  ModalHeader,
+  ModalHeading,
+} from "@twilio-paste/core/modal";
 import { Theme } from "@twilio-paste/core/theme";
-import { useEffect, useState } from "react";
-import { Modal } from "@twilio-paste/core/modal";
+import { useEffect, useState, useCallback } from "react";
 import uuid from "uuid";
 
 export function OutboundSMSContainer() {
@@ -11,22 +18,39 @@ export function OutboundSMSContainer() {
     for (const el of document.getElementsByTagName("iframe")) el.remove();
   });
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
+  const handleClose = () => setIsOpen(false);
+  const handleOpen = () => setIsOpen(true);
 
   const [modalId] = useState(uuid());
 
   return (
     <Theme.Provider theme="default">
-      <Button variant="primary" onClick={() => setIsOpen((isOpen) => !isOpen)}>
+      <Button variant="primary" onClick={handleOpen}>
         Send SMS
       </Button>
       <Modal
         ariaLabelledby={modalId}
         isOpen={isOpen}
-        onDismiss={() => setIsOpen(false)}
+        onDismiss={handleClose}
         size="default"
       >
-        <div>Hello</div>
+        <ModalHeader>
+          <ModalHeading as="h3" id={modalId}>
+            Send SMS
+          </ModalHeading>
+        </ModalHeader>
+
+        <ModalBody>Body</ModalBody>
+
+        <ModalFooter>
+          <ModalFooterActions>
+            <Button variant="secondary" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button variant="primary">Done</Button>
+          </ModalFooterActions>
+        </ModalFooter>
       </Modal>
     </Theme.Provider>
   );
