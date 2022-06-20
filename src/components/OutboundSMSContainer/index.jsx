@@ -1,8 +1,7 @@
-import { useState } from "react";
-
 import { Alert } from "@twilio-paste/core/alert";
-import { Theme } from "@twilio-paste/core/theme";
 import { Text } from "@twilio-paste/core/text";
+import { Theme } from "@twilio-paste/core/theme";
+import { useState } from "react";
 
 export function OutboundSMSContainer() {
   const [isOpen, setIsOpen] = useState(true);

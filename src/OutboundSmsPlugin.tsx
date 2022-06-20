@@ -1,5 +1,6 @@
 import { FlexPlugin } from "@twilio/flex-plugin";
 import { OutboundSMSContainer } from "./components";
+import * as Flex from "@twilio/flex-ui";
 
 const PLUGIN_NAME = "OutboundSmsPlugin";
 
@@ -14,7 +15,7 @@ export default class OutboundSmsPlugin extends FlexPlugin {
    *
    * @param flex { typeof import('@twilio/flex-ui') }
    */
-  async init(flex, manager) {
+  async init(flex: typeof Flex, manager: Flex.Manager): Promise<void> {
     const options = { sortOrder: -1 };
     flex.AgentDesktopView.Panel1.Content.add(
       <OutboundSMSContainer key="OutboundSmsPlugin-component" />,
