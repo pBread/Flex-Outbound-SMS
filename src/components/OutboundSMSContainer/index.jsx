@@ -1,19 +1,22 @@
-import { Alert } from "@twilio-paste/core/alert";
-import { Text } from "@twilio-paste/core/text";
+import { Button } from "@twilio-paste/core/button";
 import { Theme } from "@twilio-paste/core/theme";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function OutboundSMSContainer() {
-  const [isOpen, setIsOpen] = useState(true);
-  if (!isOpen) return null;
+  // there's a weird bug where there's an iframe overlaying the entire page
+  // remove before deploying
+  useEffect(() => {
+    for (const el of document.getElementsByTagName("iframe")) el.remove();
+  });
 
-  const dismiss = () => setIsOpen(false);
+  const [isOpen, setIsOpen] = useState(true);
+  const toggleOpen = () => setIsOpen((isOpen) => !isOpen);
 
   return (
     <Theme.Provider theme="default">
-      <Alert onDismiss={dismiss} variant="neutral">
-        <Text>This is a dismissible demo component.</Text>
-      </Alert>
+      <Button variant="primary" onClick={toggleOpen}>
+        Send SMS
+      </Button>
     </Theme.Provider>
   );
 }
