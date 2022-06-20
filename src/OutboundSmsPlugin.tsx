@@ -1,6 +1,6 @@
 import { FlexPlugin } from "@twilio/flex-plugin";
-import { OutboundSMSContainer } from "./components";
 import * as Flex from "@twilio/flex-ui";
+import { OutboundSMSContainer } from "./OutboundSMSContainer";
 
 const PLUGIN_NAME = "OutboundSmsPlugin";
 
