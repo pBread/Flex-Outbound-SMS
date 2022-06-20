@@ -1,9 +1,7 @@
-import React from 'react';
-import { FlexPlugin } from '@twilio/flex-plugin';
+import { FlexPlugin } from "@twilio/flex-plugin";
+import { OutboundSMSContainer } from "./components";
 
-import CustomTaskList from './components/CustomTaskList/CustomTaskList';
-
-const PLUGIN_NAME = 'OutboundSmsPlugin';
+const PLUGIN_NAME = "OutboundSmsPlugin";
 
 export default class OutboundSmsPlugin extends FlexPlugin {
   constructor() {
@@ -18,6 +16,9 @@ export default class OutboundSmsPlugin extends FlexPlugin {
    */
   async init(flex, manager) {
     const options = { sortOrder: -1 };
-    flex.AgentDesktopView.Panel1.Content.add(<CustomTaskList key="OutboundSmsPlugin-component" />, options);
+    flex.AgentDesktopView.Panel1.Content.add(
+      <OutboundSMSContainer key="OutboundSmsPlugin-component" />,
+      options
+    );
   }
 }
