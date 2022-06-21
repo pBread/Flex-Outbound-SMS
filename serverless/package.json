@@ -18,9 +18,10 @@
     "build": "tsc && npm run build:copy-assets",
     "build:copy-assets": "copyfiles src/assets/* src/assets/**/* --up 2 --exclude **/*.ts dist/assets/",
     "deploy": "twilio-run deploy --functions-folder dist/functions --assets-folder dist/assets",
+    "dev": "yarn start",
     "predeploy": "npm run build",
     "prestart": "npm run build",
-    "start": "twilio-run --functions-folder dist/functions --assets-folder dist/assets",
+    "start": "twilio-run --functions-folder dist/functions --assets-folder dist/assets --port=3001 --watch",
     "test": "tsc --noEmit"
   },
   "version": "0.0.0"
