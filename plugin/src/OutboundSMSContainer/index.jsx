@@ -11,6 +11,7 @@ import {
 } from "@twilio-paste/core/modal";
 import { TextArea } from "@twilio-paste/core/textarea";
 import { Theme } from "@twilio-paste/core/theme";
+import qs from "query-string";
 import { useEffect, useState } from "react";
 import uuid from "uuid";
 
@@ -29,6 +30,20 @@ export function OutboundSMSContainer() {
 
   const [phoneNumber, setPhoneNumber] = useState("");
   const [body, setBody] = useState("");
+
+  const sendMessage = async () => {
+    await fetch(
+      "https://pbread.ngrok.io/send-message?" +
+        qs.stringify({
+          body,
+          workerName: "pbredeson",
+          workerSid: "WK02279d57377b54201078c0533b03c486",
+          to: phoneNumber,
+        })
+    );
+
+    handleClose();
+  };
 
   return (
     <Theme.Provider theme="default">
@@ -74,7 +89,9 @@ export function OutboundSMSContainer() {
             <Button variant="secondary" onClick={handleClose}>
               Cancel
             </Button>
-            <Button variant="primary">Send</Button>
+            <Button variant="primary" onClick={sendMessage}>
+              Send
+            </Button>
           </ModalFooterActions>
         </ModalFooter>
       </Modal>

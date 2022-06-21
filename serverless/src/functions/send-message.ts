@@ -25,8 +25,8 @@ export const handler: ServerlessFunctionSignature<EnvVariables, Event> = async (
   const client = ctx.getTwilioClient();
   const { CONVERSATIONS_SVC, QUEUE_SID, WORKFLOW_SID, WORKSPACE_SID } = ctx;
 
-  const workerSid = event.workerSid || "WK02279d57377b54201078c0533b03c486";
-  const workerName = event.workerName || "pbredeson";
+  const workerSid = event.workerSid;
+  const workerName = event.workerName;
 
   const interaction = await client.flexApi.v1.interaction.create({
     channel: {
@@ -35,7 +35,7 @@ export const handler: ServerlessFunctionSignature<EnvVariables, Event> = async (
       properties: { type: "sms" },
       participants: [
         {
-          address: "+18475070348",
+          address: to10DLC(event.to),
           proxy_address: "+15304530336",
           type: "sms",
         },
@@ -60,7 +60,16 @@ export const handler: ServerlessFunctionSignature<EnvVariables, Event> = async (
 
   const message = await client.conversations
     .conversations(attributes.conversationSid)
-    .messages.create({ author: workerName, body: "Howdy partner" });
+    .messages.create({ author: workerName, body: event.body });
 
   callback(null, { attributes, interaction, message });
 };
+
+export function to10DLC(phone: string) {
+  const { area, prefix, line } =
+    phone.match(
+      /^\s*(?:\+?(?<country>\d{1,3}))?[-. (]*(?<area>\d{3})[-. )]*(?<prefix>\d{3})[-. ]*(?<line>\d{4})(?: *x(\d+))?\s*$/
+    )?.groups || {};
+
+  return `+${1}${area}${prefix}${line}`;
+}

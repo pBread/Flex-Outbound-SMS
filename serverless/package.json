@@ -2,6 +2,7 @@
   "dependencies": {
     "@twilio-labs/serverless-runtime-types": "^1.1",
     "@twilio/runtime-handler": "1.2.3",
+    "query-string": "^7.1.1",
     "twilio": "^3.56"
   },
   "devDependencies": {
@@ -21,7 +22,7 @@
     "dev": "yarn start",
     "predeploy": "npm run build",
     "prestart": "npm run build",
-    "start": "twilio-run --functions-folder dist/functions --assets-folder dist/assets --port=3001 --watch",
+    "start": "twilio-run --functions-folder dist/functions --assets-folder dist/assets --port=3001 --ngrok=pBread",
     "test": "tsc --noEmit"
   },
   "version": "0.0.0"
