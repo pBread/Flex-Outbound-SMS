@@ -4,7 +4,6 @@ import "@twilio-labs/serverless-runtime-types";
 import type { ServerlessFunctionSignature } from "@twilio-labs/serverless-runtime-types/types";
 
 type EnvVariables = {
-  CONVERSATIONS_SVC: string;
   QUEUE_SID: string;
   WORKFLOW_SID: string;
   WORKSPACE_SID: string;
@@ -23,7 +22,7 @@ export const handler: ServerlessFunctionSignature<EnvVariables, Event> = async (
   callback
 ) => {
   const client = ctx.getTwilioClient();
-  const { CONVERSATIONS_SVC, QUEUE_SID, WORKFLOW_SID, WORKSPACE_SID } = ctx;
+  const { QUEUE_SID, WORKFLOW_SID, WORKSPACE_SID } = ctx;
 
   const workerSid = event.workerSid;
   const workerName = event.workerName;
