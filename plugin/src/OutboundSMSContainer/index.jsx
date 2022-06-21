@@ -9,6 +9,7 @@ import {
   ModalHeader,
   ModalHeading,
 } from "@twilio-paste/core/modal";
+import { Spinner } from "@twilio-paste/core/spinner";
 import { TextArea } from "@twilio-paste/core/textarea";
 import { Theme } from "@twilio-paste/core/theme";
 import qs from "query-string";
@@ -22,7 +23,7 @@ export function OutboundSMSContainer() {
     for (const el of document.getElementsByTagName("iframe")) el.remove();
   });
 
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const handleClose = () => setIsOpen(false);
   const handleOpen = () => setIsOpen(true);
 
@@ -31,8 +32,11 @@ export function OutboundSMSContainer() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [body, setBody] = useState("");
 
+  const [isSending, setIsSending] = useState(false);
+
   const sendMessage = async () => {
-    await fetch(
+    setIsSending(true);
+    fetch(
       "https://pbread.ngrok.io/send-message?" +
         qs.stringify({
           body,
@@ -40,9 +44,9 @@ export function OutboundSMSContainer() {
           workerSid: "WK02279d57377b54201078c0533b03c486",
           to: phoneNumber,
         })
-    );
+    ).then(() => setIsSending(false));
 
-    handleClose();
+    setIsOpen(false);
   };
 
   return (
@@ -95,6 +99,24 @@ export function OutboundSMSContainer() {
           </ModalFooterActions>
         </ModalFooter>
       </Modal>
+
+      {isSending && (
+        <div
+          style={{
+            alignItems: "center",
+            display: "flex",
+            justifyContent: "center",
+            height: "100vh",
+            left: 0,
+            position: "fixed",
+            top: 0,
+            width: "100vw",
+            zIndex: "100",
+          }}
+        >
+          <Spinner decorative={false} size={100} title="Loading" />
+        </div>
+      )}
     </Theme.Provider>
   );
 }
